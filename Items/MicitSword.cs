@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static TynyransMod.TynUtils;
 
 namespace TynyransMod.Items
 {
@@ -34,31 +35,8 @@ namespace TynyransMod.Items
 
     public override void MeleeEffects(Player player, Rectangle hitbox)
     {
-			int NoOfProj = Main.projectile.Length;
-			int affectedProjs = 0;
-			for (int i = 0; i < NoOfProj; i++)
-			{
-				Projectile currProj = Main.projectile[i];
-				if (!player.HasBuff(mod.BuffType("CantDeflect")) && currProj.active && currProj.hostile && hitbox.Intersects(currProj.Hitbox))
-				{
-					// Add your melee damage multiplier to the damage so it has a little more oomph
-					currProj.damage = (int)(currProj.damage * player.meleeDamageMult);
-					// Convert the proj so you own it and reverse its trajectory
-					currProj.owner = player.whoAmI;
-					currProj.hostile = false;
-					currProj.friendly = true;
-					currProj.Tyn().deflected = true;
-					currProj.velocity.X = -currProj.velocity.X;
-					currProj.velocity.Y = -currProj.velocity.Y;
-					affectedProjs++;
-				}
-			}
-				if (affectedProjs > 0)
-				{
-					// Give a cooldown; 1 second per projectile reflected
-					// CantDeflect is a debuff, separate from this code block
-					player.AddBuff(mod.BuffType("CantDeflect"), affectedProjs * 60, true);
-				}
+			// Run the parry util (In TynUtils)
+			Parry(player, hitbox);
     }
 
     

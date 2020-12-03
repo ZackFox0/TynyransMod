@@ -15,10 +15,12 @@ namespace TynyransMod
   public class Tynyran : ModPlayer
   {
     public bool deflectable = false;
+    public bool micitBangle = true;
 
     public override void ResetEffects()
     {
       deflectable = false;
+      micitBangle = false;
     }
   }
 }

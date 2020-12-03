@@ -1,14 +1,11 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using System;
 
 namespace TynyransMod.Projectiles
 {
     public class Shot777 : ModProjectile
     {
+        private bool determinedRotation = false;
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault(".777 Shot");
@@ -16,7 +13,6 @@ namespace TynyransMod.Projectiles
 
         public override void SetDefaults()
         {
-            Player player = Main.player[projectile.owner];
             projectile.friendly = true;
             projectile.width = 136;
             projectile.height = 6;
@@ -27,7 +23,16 @@ namespace TynyransMod.Projectiles
             projectile.penetrate = 6;
             projectile.scale = 1f;
             projectile.damage = 300;
-            projectile.rotation = projectile.DirectionTo(Main.MouseWorld).ToRotation();
+        }
+
+        public override void AI()
+        {
+            Player player = Main.player[projectile.owner];
+            if (!determinedRotation)
+            {
+                projectile.rotation = player.DirectionTo(Main.MouseWorld).ToRotation();
+                determinedRotation = true;
+            }
         }
     }
 }

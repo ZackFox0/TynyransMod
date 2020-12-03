@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 
 namespace TynyransMod.Items
 {
@@ -26,9 +22,8 @@ namespace TynyransMod.Items
       item.scale = 1.0f;
       item.ammo = AmmoID.Bullet;
       item.maxStack = 99;
+      item.shoot = mod.ProjectileType("Shot777");
     }
-
-
     public override void AddRecipes()
     {
       // Recipes here. See Basic Recipe Guide2
@@ -38,12 +33,5 @@ namespace TynyransMod.Items
       recipe.SetResult(this); //Sets the result of this recipe to this item
       recipe.AddRecipe(); //Adds the recipe to the mod
     }
-
-
-    /*public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-    {
-        Texture2D tex = ModContent.GetTexture("Items/Weapons/MoonCleaver/MoonCleaverGlow"); //loads our glowmask
-        spriteBatch.Draw(tex, position, tex.Frame(), Color.White, 0, origin, scale, 0, 0); //draws our glowmask in the inventory. To see how to draw it in the world, see the ModifyDrawLayers method in ExamplePlayer.
-    }*/
   }
 }

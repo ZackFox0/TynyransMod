@@ -21,8 +21,8 @@ namespace TynyransMod.Items
       item.width = 46;
       item.height = 24;
       item.rare = 12;
-      item.useTime = 120;
-      item.useAnimation = 120;
+      item.useTime = 75;
+      item.useAnimation = 75;
       item.useTurn = false;
       item.useStyle = 5;
       item.scale = 1.0f;
@@ -30,8 +30,8 @@ namespace TynyransMod.Items
       item.noMelee = true;
       item.autoReuse = false;
       item.knockBack = 3f;
-      item.shoot = mod.ProjectileType("Shot777");
-      item.shootSpeed = 50f;
+      item.useAmmo = mod.ItemType("Round777");
+      item.shootSpeed = 75f;
       item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Shot777");
     }
 
