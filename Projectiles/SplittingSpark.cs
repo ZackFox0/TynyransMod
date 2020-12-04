@@ -17,6 +17,7 @@ namespace TynyransMod.Projectiles
     public override void SetDefaults()
     {
       projectile.CloneDefaults(ProjectileID.Spark);
+      projectile.penetrate = -1;
       projectile.hide = false;
     }
 
