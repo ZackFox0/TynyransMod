@@ -19,21 +19,22 @@ namespace TynyransMod
       dungeonDrops = false;
     }
 
-    public override void NPCLoot(NPC npc)
-    {
-      for (int i = 0; i < Main.player.Length; i++)
-      {
-        Player currPC = Main.player[i];
-        if (currPC.ZoneDungeon)
-        {
-          // if (Main.rand.Next(1, 100) >= 95) // 5%
-          // {
-            int sWBID = ModContent.ItemType<ScrollWaterBolt>();
-            Item sWB = Main.item[sWBID];
-            Item.NewItem((int)npc.position.X, (int)npc.position.Y, sWB.width, sWB.height, sWBID);
-          // }
-        }
-      }
-    }
+    // TODO: Figure this shit out
+    // public override void NPCLoot(NPC npc)
+    // {
+    //   for (int i = 0; i < Main.player.Length; i++)
+    //   {
+    //     Player currPC = Main.player[i];
+    //     if (currPC.ZoneDungeon)
+    //     {
+    //       // if (Main.rand.Next(1, 100) >= 95) // 5%
+    //       // {
+    //         int sWBID = ModContent.ItemType<ScrollWaterBolt>();
+    //         Item sWB = Main.item[sWBID];
+    //         Item.NewItem((int)npc.position.X, (int)npc.position.Y, sWB.width, sWB.height, sWBID);
+    //       // }
+    //     }
+    //   }
+    // }
   }
 }

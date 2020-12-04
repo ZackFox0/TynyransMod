@@ -6,7 +6,8 @@ namespace TynyransMod.Items
 {
 	public abstract class Scroll : ModItem
 	{
-
+    public override string Texture => (GetType().Namespace + ".Scroll").Replace('.', '/');
+    
 		public override void SetDefaults() 
 		{
       item.magic = true;

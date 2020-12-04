@@ -10,5 +10,6 @@ namespace TynyransMod
     public override bool InstancePerEntity => true;
     public override bool CloneNewInstances => true;
 
+
   }
 }
