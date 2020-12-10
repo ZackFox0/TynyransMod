@@ -14,8 +14,8 @@ namespace TynyransMod.Items
 
 		public override void SetDefaults() 
 		{
-			item.width = 30;
-			item.height = 24;
+			item.width = 28;
+			item.height = 28;
 			item.value = 10000;
 			item.rare = 12;
       item.accessory = true;
