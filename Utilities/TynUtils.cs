@@ -16,6 +16,7 @@ namespace TynyransMod
 
     public static float InRadians(this float degrees) => MathHelper.ToRadians(degrees);
     public static float InDegrees(this float radians) => MathHelper.ToDegrees(radians);
+
     public static Vector2 RandomPointInHitbox(this Rectangle hitbox)
     {
       Vector2 v = new Vector2();
@@ -25,7 +26,12 @@ namespace TynyransMod
       v.Y = semiAxisY;
       return v;
     }
-
+    public static Vector2 RotateTo(this Vector2 v, float rotation)
+    {
+      float oldVRotation = v.ToRotation();
+      return v.RotatedBy(rotation - oldVRotation);
+    }
+    public static bool IsInRadius(this Vector2 targetPos, Vector2 center, float radius) => Vector2.Distance(center, targetPos) <= radius;
     public static void Parry(Player player, Rectangle hitbox)
     {
       int NoOfProj = Main.projectile.Length;

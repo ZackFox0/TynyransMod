@@ -20,6 +20,8 @@ namespace TynyransMod
                 micitEarrings2;
     public float tynyran;
     public int tynyranCrit;
+    private int rHECooldown = 60;
+    private int rHEoldLife = 0;
 
     public override void ResetEffects()
     {
@@ -31,6 +33,27 @@ namespace TynyransMod
       tynyranCrit = 0;
     }
 
+    private void RegenHealEffect()
+    {
+      if (rHECooldown > 0)
+      {
+        rHECooldown--;
+      }
+      else
+      {
+        int hDiff = player.statLife - rHEoldLife;
+        if (hDiff > 0)
+          player.HealEffect(player.statLife - rHEoldLife);
+
+        rHEoldLife = player.statLife;
+        rHECooldown = 180;
+      }
+    }
+    public override void PostUpdate()
+    {
+      base.PostUpdate();
+      RegenHealEffect();
+    }
     public override void ModifyManaCost(Item item, ref float reduce, ref float mult)
     {
       if (micitEarrings1 && micitEarrings2)

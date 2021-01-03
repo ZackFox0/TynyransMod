@@ -2,6 +2,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.Audio;
+using TynyransMod.Projectiles;
+using Microsoft.Xna.Framework;
 
 namespace TynyransMod.Items
 {
@@ -20,6 +22,8 @@ namespace TynyransMod.Items
     {
       item.CloneDefaults(ItemID.SpectreStaff);
       defaultSound = item.UseSound;
+      item.shoot = ModContent.ProjectileType<ProjectorShield>();
+      item.shootSpeed = 0f;
     }
 
     public override bool AltFunctionUse(Player player)
@@ -40,8 +44,14 @@ namespace TynyransMod.Items
       }
       else
       {
+        item.shoot = ModContent.ProjectileType<ProjectorShield>();
         item.UseSound = defaultSound;
       }
+      return true;
+    }
+    public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
+    {
+      position = Main.MouseWorld;
       return true;
     }
     public override void AddRecipes()
