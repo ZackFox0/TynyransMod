@@ -9,11 +9,13 @@ namespace TynyransMod
 {
   public static class TynUtils
   {
-    public static Tynyran Tyn(this Player player) => (Tynyran)player.GetModPlayer<Tynyran>();
-    public static TynGlobalNPC Tyn(this NPC npc) => (TynGlobalNPC)npc.GetGlobalNPC<TynGlobalNPC>();
-    public static TynGlobalItem Tyn(this Item item) => (TynGlobalItem)item.GetGlobalItem<TynGlobalItem>();
-    public static TynGlobalProj Tyn(this Projectile proj) => (TynGlobalProj)proj.GetGlobalProjectile<TynGlobalProj>();
+    public static Tynyran Tyn(this Player player) => player.GetModPlayer<Tynyran>();
+    public static TynGlobalNPC Tyn(this NPC npc) => npc.GetGlobalNPC<TynGlobalNPC>();
+    public static TynGlobalItem Tyn(this Item item) => item.GetGlobalItem<TynGlobalItem>();
+    public static TynGlobalProj Tyn(this Projectile proj) => proj.GetGlobalProjectile<TynGlobalProj>();
 
+    public static float InRadians(this float degrees) => MathHelper.ToRadians(degrees);
+    public static float InDegrees(this float radians) => MathHelper.ToDegrees(radians);
     public static Vector2 RandomPointInHitbox(this Rectangle hitbox)
     {
       Vector2 v = new Vector2();

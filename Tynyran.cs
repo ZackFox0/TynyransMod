@@ -14,12 +14,12 @@ namespace TynyransMod
 {
   public class Tynyran : ModPlayer
   {
-    public bool deflectable = false;
-    public bool micitBangle = true;
-    public bool micitEarrings1 = true;
-    public bool micitEarrings2 = true;
-    public float tynyran = 1f;
-    public int tynyranCrit = 0;
+    public bool deflectable,
+                micitBangle,
+                micitEarrings1,
+                micitEarrings2;
+    public float tynyran;
+    public int tynyranCrit;
 
     public override void ResetEffects()
     {
@@ -33,10 +33,8 @@ namespace TynyransMod
 
     public override void ModifyManaCost(Item item, ref float reduce, ref float mult)
     {
-      if (player.Tyn().micitEarrings1 && player.Tyn().micitEarrings2)
-      {
+      if (micitEarrings1 && micitEarrings2)
         reduce -= 0.35f;
-      }
     }
   }
 }

@@ -29,7 +29,7 @@ namespace TynyransMod.Projectiles
     {
       for (float rotation = 0f; rotation <= 360f; rotation += 45f)
       {
-        Vector2 perturbedSpeed = new Vector2(0, 10f).RotatedBy(MathHelper.ToRadians(rotation));
+        Vector2 perturbedSpeed = new Vector2(0, 10f).RotatedBy(rotation.InRadians());
         Projectile.NewProjectile(target.position, perturbedSpeed, ProjectileID.Spark, damage, knockBack, projectile.owner);
       }
     }
