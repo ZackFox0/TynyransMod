@@ -9,7 +9,5 @@ namespace TynyransMod
     public bool deflected = false;
     public override bool InstancePerEntity => true;
     public override bool CloneNewInstances => true;
-
-
   }
 }

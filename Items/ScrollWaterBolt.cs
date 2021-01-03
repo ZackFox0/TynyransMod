@@ -3,12 +3,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-
 namespace TynyransMod.Items
 {
   public class ScrollWaterBolt : Scroll
   {
-
     public override void SetStaticDefaults()
     {
       DisplayName.SetDefault("Water Bolt Scroll");

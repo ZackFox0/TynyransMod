@@ -8,12 +8,12 @@ namespace TynyransMod.Items
 {
 	public class MicitSword : ModItem
 	{
-		public override void SetStaticDefaults() 
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Micit Sword"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
 			Tooltip.SetDefault("\"A sword forged from the divine steel, Micit.\nIncredibly strong, sharp, light, and durable.\"");
 		}
-		public override void SetDefaults() 
+		public override void SetDefaults()
 		{
 			item.damage = 150;
 			item.crit = 45;
@@ -23,7 +23,7 @@ namespace TynyransMod.Items
 			item.scale = 2.25f;
 			item.useTime = 12;
 			item.useAnimation = 12;
-			item.useStyle = 1;
+			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.knockBack = 6;
 			item.value = 10000;
 			item.rare = 12;
@@ -32,16 +32,13 @@ namespace TynyransMod.Items
 			item.useTurn = true;
 		}
 
-
     public override void MeleeEffects(Player player, Rectangle hitbox)
     {
 			// Run the parry util (In TynUtils)
 			Parry(player, hitbox);
     }
 
-    
-
-		public override void AddRecipes() 
+		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ModContent.ItemType<MicitBar>(), 10);

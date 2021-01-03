@@ -3,12 +3,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-
 namespace TynyransMod.Items
 {
   public class Revolver777 : ModItem
   {
-
     public override void SetStaticDefaults()
     {
       DisplayName.SetDefault(".777 Revolver");
@@ -24,7 +22,7 @@ namespace TynyransMod.Items
       item.useTime = 75;
       item.useAnimation = 75;
       item.useTurn = false;
-      item.useStyle = 5;
+      item.useStyle = ItemUseStyleID.HoldingOut;
       item.scale = 1.0f;
       item.ranged = true;
       item.noMelee = true;
@@ -34,7 +32,6 @@ namespace TynyransMod.Items
       item.shootSpeed = 75f;
       item.UseSound = mod.GetLegacySoundSlot(SoundType.Item, "Sounds/Item/Shot777");
     }
-
 
     public override void AddRecipes()
     {
@@ -49,7 +46,6 @@ namespace TynyransMod.Items
       recipe.SetResult(this); //Sets the result of this recipe to this item
       recipe.AddRecipe(); //Adds the recipe to the mod
     }
-
 
     /*public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {

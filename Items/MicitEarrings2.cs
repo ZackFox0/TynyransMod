@@ -6,13 +6,13 @@ namespace TynyransMod.Items
 {
 	public class MicitEarrings2 : ModItem
 	{
-		public override void SetStaticDefaults() 
+		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Micit Earring (Right)"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
 			Tooltip.SetDefault("\"Earrings made from Micit. They radiate excessive magic power.\"\n+75% magic damage and 10% magic crit chance.\nSet bonus: Having both earrings on reduces mana cost by 35%.");
 		}
 
-		public override void SetDefaults() 
+		public override void SetDefaults()
 		{
 			item.width = 28;
 			item.height = 28;
@@ -28,9 +28,7 @@ namespace TynyransMod.Items
 			player.Tyn().micitEarrings2 = true;
     }
 
-    
-
-		public override void AddRecipes() 
+		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.FragmentSolar, 10);

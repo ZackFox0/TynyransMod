@@ -18,6 +18,8 @@ namespace TynyransMod
     public bool micitBangle = true;
     public bool micitEarrings1 = true;
     public bool micitEarrings2 = true;
+    public float tynyran = 1f;
+    public int tynyranCrit = 0;
 
     public override void ResetEffects()
     {
@@ -25,6 +27,8 @@ namespace TynyransMod
       micitBangle = false;
       micitEarrings1 = false;
       micitEarrings2 = false;
+      tynyran = 1f;
+      tynyranCrit = 0;
     }
 
     public override void ModifyManaCost(Item item, ref float reduce, ref float mult)

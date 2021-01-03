@@ -4,12 +4,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TynyransMod.Projectiles;
 
-
 namespace TynyransMod.Items
 {
   public class ScrollSparking : Scroll
   {
-
     public override void SetStaticDefaults()
     {
       DisplayName.SetDefault("Sparking Scroll");
