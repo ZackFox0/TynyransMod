@@ -9,45 +9,19 @@ namespace TynyransMod.Items
 {
   public class ShieldProjector : ModItem
   {
-    private LegacySoundStyle defaultSound;
     public override string Texture => "Terraria/Item_" + ItemID.SpectreStaff;
 
     public override void SetStaticDefaults()
     {
       DisplayName.SetDefault("Shield Projector");
-      Tooltip.SetDefault("Summon shields to protect you, boosting your defense.\nAlt-fire to summon a large panel shield, blocking non-boss projectiles.");
+      Tooltip.SetDefault("Summons a shield that protects you from enemy projectiles!");
     }
 
     public override void SetDefaults()
     {
       item.CloneDefaults(ItemID.SpectreStaff);
-      defaultSound = item.UseSound;
       item.shoot = ModContent.ProjectileType<ProjectorShield>();
       item.shootSpeed = 0f;
-    }
-
-    public override bool AltFunctionUse(Player player)
-    {
-      return true;
-    }
-
-    public override bool ConsumeAmmo(Player player)
-    {
-      return player.altFunctionUse != 2;
-    }
-    public override bool CanUseItem(Player player)
-    {
-      if (player.altFunctionUse == 2)
-      {
-        item.shoot = ProjectileID.None;
-        item.UseSound = new LegacySoundStyle(38, 1, Terraria.Audio.SoundType.Sound); // Coin Pickup sound
-      }
-      else
-      {
-        item.shoot = ModContent.ProjectileType<ProjectorShield>();
-        item.UseSound = defaultSound;
-      }
-      return true;
     }
     public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
     {
