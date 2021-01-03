@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
+using static TynyransMod.TynUtils;
 
 namespace TynyransMod.Projectiles
 {
@@ -22,9 +23,10 @@ namespace TynyransMod.Projectiles
       projectile.aiStyle = 0;
       projectile.tileCollide = true;
       projectile.ignoreWater = true;
-      projectile.timeLeft = 300;
+      projectile.penetrate = 5;
       projectile.scale = 1f;
-      projectile.damage = 300;
+      projectile.damage = 0;
+      projectile.sentry = true;
     }
     private void CreateShieldField()
     {
@@ -39,6 +41,10 @@ namespace TynyransMod.Projectiles
     public override void AI()
     {
       CreateShieldField();
+
+      if (GrabProjCount(projectile.type) > 1)
+        Main.player[projectile.owner].WipeOldestTurret();
+
       foreach (Projectile proj in Main.projectile)
       {
         if (proj.active && proj.hostile && proj.position.IsInRadius(projectile.position, radius))
@@ -47,6 +53,7 @@ namespace TynyransMod.Projectiles
             _ = Dust.NewDust(proj.position, 3, 3, 16, 0, 0, 90, new Color(255,255,255), 1f);
           proj.Kill();
           proj.active = false;
+          projectile.penetrate--;
         }
       }
     }

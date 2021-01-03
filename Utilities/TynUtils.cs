@@ -32,6 +32,15 @@ namespace TynyransMod
       return v.RotatedBy(rotation - oldVRotation);
     }
     public static bool IsInRadius(this Vector2 targetPos, Vector2 center, float radius) => Vector2.Distance(center, targetPos) <= radius;
+    public static int GrabProjCount(int type) {
+      int count = 0;
+      foreach (Projectile proj in Main.projectile)
+      {
+        if (proj.type == type)
+          count++;
+      }
+      return count;
+    }
     public static void Parry(Player player, Rectangle hitbox)
     {
       int NoOfProj = Main.projectile.Length;
