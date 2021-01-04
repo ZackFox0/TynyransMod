@@ -20,6 +20,8 @@ namespace TynyransMod.Items
     public override void SetDefaults()
     {
       item.CloneDefaults(ItemID.SpectreStaff);
+      item.damage = 0;
+      item.magic = false;
       item.shoot = ModContent.ProjectileType<ProjectorShield>();
       item.shootSpeed = 0f;
     }
