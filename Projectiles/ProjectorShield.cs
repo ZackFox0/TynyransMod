@@ -10,6 +10,7 @@ namespace TynyransMod.Projectiles
   public class ProjectorShield : ModProjectile
   {
     private const float radius = 100f;
+    private float startingR = 0f;
     public override void SetStaticDefaults()
     {
       DisplayName.SetDefault("Projector Shield");
@@ -30,10 +31,10 @@ namespace TynyransMod.Projectiles
     }
     private void CreateShieldField()
     {
-      for (float rotation = 0f; rotation < 360f; rotation += 45f)
+      for (float rotation = startingR; rotation < 360f + startingR; rotation += 45f)
       {
         Vector2 spawnPosition = projectile.Center + new Vector2(0f, radius).RotatedBy(rotation.InRadians());
-        Dust d = Dust.NewDustPerfect(spawnPosition, 16, null, 90, new Color(255, 255, 255), 1f);
+        Dust d = Dust.NewDustPerfect(spawnPosition, 16, new Vector2(0f, 0f), 90, new Color(255, 255, 255), 1f);
         d.noLight = true;
         d.noGravity = true;
       }
@@ -41,6 +42,7 @@ namespace TynyransMod.Projectiles
     public override void AI()
     {
       CreateShieldField();
+      startingR = startingR + 2 >= 360f ? 0 : startingR + 2;
 
       if (GrabProjCount(projectile.type) > 1)
         Main.player[projectile.owner].WipeOldestTurret();
@@ -49,9 +51,8 @@ namespace TynyransMod.Projectiles
       {
         if (proj.active && proj.hostile && proj.position.IsInRadius(projectile.position, radius))
         {
-          for (int i = 0; i < 5; i++)
-            _ = Dust.NewDust(proj.position, 3, 3, 16, 0, 0, 90, new Color(255,255,255), 1f);
-          proj.Kill();
+          for (int i = 0; i < 10; i++)
+            _ = Dust.NewDust(proj.position, 3, 3, 16, -proj.velocity.X, -proj.velocity.Y, 90, new Color(255,255,255), 1f);
           proj.active = false;
           projectile.penetrate--;
         }
