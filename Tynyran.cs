@@ -24,8 +24,8 @@ namespace TynyransMod
                 bloodAmp;
     public float tynyran, hemoDamage;
     public int tynyranCrit, hemoCrit;
-    public int bloodLevel, bloodGained, bloodCollectionCooldown;
-    public readonly int maxBloodLevel = 100, maxGainPerSecond = 10;
+    public int bloodLevel, maxBloodLevel = 100, bloodGained, bloodCollectionCooldown, bloodConsumedOnUse = 25;
+    public readonly int maxGainPerSecond = 10;
 
     private float startingR;
     private float stalwartBurnout;
@@ -33,10 +33,12 @@ namespace TynyransMod
     public override void ResetEffects()
     {
       bloodLevel = hemomancy ? bloodLevel : 0;
+      bloodConsumedOnUse = 25;
       deflectable = false;
       hemoCrit = 0;
       hemoDamage = 1f;
       hemomancy = false;
+      maxBloodLevel = 100;
       micitBangle = false;
       micitEarrings1 = false;
       micitEarrings2 = false;
@@ -57,9 +59,9 @@ namespace TynyransMod
     }
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
-      if (hemomancy && !bloodAmp && TynyransMod.UseBlood.JustPressed && bloodLevel >= 25)
+      if (hemomancy && !bloodAmp && TynyransMod.UseBlood.JustPressed && bloodLevel >= bloodConsumedOnUse)
       {
-        bloodLevel -= 25;
+        bloodLevel -= bloodConsumedOnUse;
         bloodAmp = true;
       }
     }
@@ -90,9 +92,17 @@ namespace TynyransMod
       {
         bloodLevel++;
         bloodGained++;
-        bloodCollectionCooldown = 60;
+        if (bloodCollectionCooldown is 0) bloodCollectionCooldown = 60;
 
         if (bloodLevel > maxBloodLevel) bloodLevel = maxBloodLevel;
+      }
+    }
+    public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+    {
+      if (player.Tyn().bloodAmp)
+      {
+        player.Tyn().bloodAmp = false;
+        damage = (int)(damage * hemoDamage);
       }
     }
     public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
