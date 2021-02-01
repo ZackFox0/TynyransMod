@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework.Input;
+using Terraria.GameInput;
 
 namespace TynyransMod
 {
@@ -18,16 +19,24 @@ namespace TynyransMod
                 micitBangle,
                 micitEarrings1,
                 micitEarrings2,
-                stalwartDome;
-    public float tynyran;
-    public int tynyranCrit;
+                stalwartDome,
+                hemomancy,
+                bloodAmp;
+    public float tynyran, hemoDamage;
+    public int tynyranCrit, hemoCrit;
+    public int bloodLevel, bloodGained, bloodCollectionCooldown;
+    public readonly int maxBloodLevel = 100, maxGainPerSecond = 10;
 
     private float startingR;
-    private float stalwartBurnout = 0f;
+    private float stalwartBurnout;
 
     public override void ResetEffects()
     {
+      bloodLevel = hemomancy ? bloodLevel : 0;
       deflectable = false;
+      hemoCrit = 0;
+      hemoDamage = 1f;
+      hemomancy = false;
       micitBangle = false;
       micitEarrings1 = false;
       micitEarrings2 = false;
@@ -46,8 +55,18 @@ namespace TynyransMod
         d.noGravity = true;
       }
     }
+    public override void ProcessTriggers(TriggersSet triggersSet)
+    {
+      if (hemomancy && !bloodAmp && TynyransMod.UseBlood.JustPressed && bloodLevel >= 25)
+      {
+        bloodLevel -= 25;
+        bloodAmp = true;
+      }
+    }
     public override void PostUpdate()
     {
+      if (bloodCollectionCooldown > 0) bloodCollectionCooldown--;
+      if (bloodCollectionCooldown is 0) bloodGained = 0;
       if (stalwartDome)
       {
         CreateShieldField();
@@ -65,7 +84,17 @@ namespace TynyransMod
         }
       }
     }
+    public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit)
+    {
+      if (target.active && !target.townNPC && !target.friendly && hemomancy && bloodGained < maxGainPerSecond)
+      {
+        bloodLevel++;
+        bloodGained++;
+        bloodCollectionCooldown = 60;
 
+        if (bloodLevel > maxBloodLevel) bloodLevel = maxBloodLevel;
+      }
+    }
     public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
     {
       if (stalwartDome)
