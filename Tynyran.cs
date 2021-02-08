@@ -25,6 +25,7 @@ namespace TynyransMod
     public float tynyran, hemoDamage;
     public int tynyranCrit, hemoCrit;
     public int bloodLevel, maxBloodLevel = 100, bloodGained, bloodCollectionCooldown, bloodConsumedOnUse = 25;
+    public int noteCount, maxNotes = 4;
     public readonly int maxGainPerSecond = 10;
 
     private float startingR;
