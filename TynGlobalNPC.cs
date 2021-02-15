@@ -7,13 +7,14 @@ namespace TynyransMod
 {
   public class TynGlobalNPC : GlobalNPC
   {
-    public static bool dungeonDrops = false;
+    public int armor;
+    public int armorMax;
+    public bool Armored {
+      get => armor > 0;
+    }
+    public static bool dungeonDrops;
     public override bool InstancePerEntity => true;
     public override bool CloneNewInstances => true;
-
-    public override void SetDefaults(NPC npc)
-    {
-    }
     public override void ResetEffects(NPC npc)
     {
       dungeonDrops = false;

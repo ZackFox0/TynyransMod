@@ -1,15 +1,11 @@
 using Terraria;
-using Terraria.ID;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System;
-using System.Linq;
-using Microsoft.Xna.Framework.Input;
 using Terraria.GameInput;
+using TynyransMod.Items;
+using static Terraria.ModLoader.ModContent;
 
 namespace TynyransMod
 {
@@ -58,6 +54,17 @@ namespace TynyransMod
         d.noGravity = true;
       }
     }
+    public override void SetupStartInventory(IList<Item> items, bool mediumCoreDeath)
+    {
+      items.Add(CreateItem(ItemType<OrbOfRegrets>()));
+
+      Item CreateItem(int type)
+      {
+        Item obj = new Item();
+        obj.SetDefaults(type, false);
+        return obj;
+      }
+    }
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
       if (hemomancy && !bloodAmp && TynyransMod.UseBlood.JustPressed && bloodLevel >= bloodConsumedOnUse)
@@ -100,9 +107,9 @@ namespace TynyransMod
     }
     public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
     {
-      if (player.Tyn().bloodAmp)
+      if (bloodAmp)
       {
-        player.Tyn().bloodAmp = false;
+        bloodAmp = false;
         damage = (int)(damage * hemoDamage);
       }
     }
@@ -116,6 +123,7 @@ namespace TynyransMod
     }
     public override void NaturalLifeRegen(ref float regen)
     {
+      if (TynyranWorld.tynMode) regen = 0;
       if (stalwartDome)
       {
         // Burnout mechanic. a flat 10 HP/sec isn't enough to compensate for the power this ability provides.
@@ -126,6 +134,14 @@ namespace TynyransMod
     {
       if (micitEarrings1 && micitEarrings2)
         reduce -= 0.35f;
+    }
+    public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
+    {
+      if (TynyranWorld.tynMode) damage = (int)(damage * 1.5f);
+    }
+    public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
+    {
+      if (TynyranWorld.tynMode) damage = (int)(damage * 1.5f);
     }
   }
 }

@@ -7,5 +7,6 @@ namespace TynyransMod
 {
   public class TynyranWorld : ModWorld
   {
+    public static bool tynMode;
   }
 }

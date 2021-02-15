@@ -23,6 +23,12 @@ namespace TynyransMod
 
       UseBlood = RegisterHotKey("Use Blood Magic", "G");
     }
+    public override void Unload()
+    {
+      bloodLevel = null;
+      bloodLevelUI = null;
+      UseBlood = null;
+    }
 
     private bool DrawBloodLevelUI()
     {

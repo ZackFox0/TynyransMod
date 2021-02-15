@@ -24,7 +24,7 @@ namespace TynyransMod.Items
     public override bool CanEquipAccessory(Player player, int slot) => player.Tyn().hemomancy;
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
-      player.Tyn().hemoDamage += 0.25f;
+      player.Tyn().hemoDamage++;
       player.Tyn().bloodConsumedOnUse -= 5;
       player.Tyn().maxBloodLevel += 10;
     }

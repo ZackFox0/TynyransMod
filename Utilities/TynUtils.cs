@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using TynyransMod.Buffs;
+using Terraria.Localization;
 
 namespace TynyransMod
 {
@@ -78,6 +79,19 @@ namespace TynyransMod
       if (!condition)
         return;
       list.Add(type);
+    }
+    public static void Talk(string message)
+    {
+      if (Main.netMode != NetmodeID.Server)
+      {
+        string text = Language.GetTextValue(message);
+        Main.NewText(text, 241, 127, 82);
+      }
+      else
+      {
+        NetworkText text = NetworkText.FromKey(message);
+        NetMessage.BroadcastChatMessage(text, new Color(241, 127, 82));
+      }
     }
   }
 }
