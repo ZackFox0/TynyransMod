@@ -93,5 +93,30 @@ namespace TynyransMod
         NetMessage.BroadcastChatMessage(text, new Color(241, 127, 82));
       }
     }
+    public static int ArmorCalculation(NPC npc, ref int damage, ref bool crit)
+    {
+      int armorDamage = 0;
+      // If the NPC is armored
+      if (npc.Tyn().Armored)
+      {
+        crit = false;
+        // Deduct the damage from the armor
+        armorDamage += (int)(damage * npc.Tyn().armorEfficiency);
+        npc.Tyn().armor -= armorDamage;
+        damage = (int)(damage * (1f - npc.Tyn().armorEfficiency));
+        // If the armor ends up being less than 0
+        if (npc.Tyn().armor < 0)
+        {
+          // Signify that as "overflow damage" by deducting the abs of the remainder from the NPC's life
+          armorDamage += npc.Tyn().armor;
+          // Subtracting negative == adding positive
+          npc.life += npc.Tyn().armor;
+          damage -= npc.Tyn().armor;
+          npc.Tyn().armor = 0;
+        }
+        CombatText.NewText(npc.Hitbox, Color.White, armorDamage);
+      }
+      return damage;
+    }
   }
 }

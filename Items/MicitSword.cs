@@ -16,7 +16,7 @@ namespace TynyransMod.Items
 		public override void SetDefaults()
 		{
 			item.damage = 150;
-			item.crit = 45;
+			item.crit = 20;
 			item.melee = true;
 			item.width = 30;
 			item.height = 30;

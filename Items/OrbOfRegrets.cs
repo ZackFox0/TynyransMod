@@ -25,20 +25,15 @@ namespace TynyransMod.Items
     }
 
     public override bool ConsumeItem(Player player) => false;
+    public override bool CanUseItem(Player player) => Main.expertMode && !Main.hardMode;
     public override bool UseItem(Player player)
     {
-      if (Main.expertMode)
-      {
-        Main.PlaySound(SoundID.DD2_BetsyDeath);
-        TynyranWorld.tynMode = !TynyranWorld.tynMode;
-        if (TynyranWorld.tynMode) Talk("You just made a huge mistake...");
-        else Talk("You lucked out. This time.");
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+      Main.PlaySound(SoundID.DD2_BetsyDeath);
+      TynyranWorld.tynMode = !TynyranWorld.tynMode;
+      if (TynyranWorld.tynMode) Talk("You just made a huge mistake...");
+      else Talk("You lucked out. This time.");
+
+      return true;
     }
   }
 }
