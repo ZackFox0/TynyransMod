@@ -43,31 +43,11 @@ namespace TynyransMod
     }
     public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
     {
-      ArmorCalculation(npc, ref damage, ref crit);
+      damage = ArmorCalculation(npc, ref damage, ref crit);
     }
     public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
     {
-      int armorDamage = 0;
-      // If the NPC is armored
-      if (npc.Tyn().Armored)
-      {
-        crit = false;
-        // Deduct the damage from the armor
-        armorDamage += (int)(damage * armorEfficiency);
-        npc.Tyn().armor -= armorDamage;
-        damage = (int)(damage * (1f - armorEfficiency));
-        // If the armor ends up being less than 0
-        if (npc.Tyn().armor < 0)
-        {
-          // Signify that as "overflow damage" by deducting the abs of the remainder from the NPC's life
-          armorDamage += npc.Tyn().armor;
-          // Subtracting negative == adding positive
-          npc.life += npc.Tyn().armor;
-          damage -= npc.Tyn().armor;
-          npc.Tyn().armor = 0;
-        }
-        CombatText.NewText(npc.Hitbox, Color.White, armorDamage);
-      }
+      damage = ArmorCalculation(npc, ref damage, ref crit);
     }
     // TODO: Figure this shit out
     // public override void NPCLoot(NPC npc)
