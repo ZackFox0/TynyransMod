@@ -19,24 +19,14 @@ namespace TynyransMod
     public static bool dungeonDrops;
     public override bool InstancePerEntity => true;
     public override bool CloneNewInstances => true;
-    // public override void SetDefaults(NPC npc)
-    // {
-    //   switch (npc.type)
-    //   {
-    //     case NPCID.BlueSlime:
-    //       npc.Tyn().armorMax = 5;
-    //       npc.Tyn().armor = armorMax;
-    //       break;
-    //     case NPCID.GreenSlime:
-    //       npc.Tyn().armorMax = 5;
-    //       npc.Tyn().armor = armorMax;
-    //       break;
-    //     case NPCID.SandSlime:
-    //       npc.Tyn().armorMax = 10;
-    //       npc.Tyn().armor = armorMax;
-    //       break;
-    //   }
-    // }
+    public override void SetDefaults(NPC npc)
+    {
+      if (!npc.friendly && !npc.townNPC)
+      {
+        npc.Tyn().armorMax = npc.lifeMax;
+        npc.Tyn().armor = npc.Tyn().armorMax;
+      }
+    }
     public override void ResetEffects(NPC npc)
     {
       dungeonDrops = false;
@@ -48,6 +38,10 @@ namespace TynyransMod
     public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
     {
       damage = ArmorCalculation(npc, ref damage, ref crit);
+    }
+    public override void ModifyHitNPC(NPC npc, NPC target, ref int damage, ref float knockback, ref bool crit)
+    {
+      damage = ArmorCalculation(target, ref damage, ref crit);
     }
     // TODO: Figure this shit out
     // public override void NPCLoot(NPC npc)

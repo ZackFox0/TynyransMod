@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using TynyransMod.UI;
+using TynyransMod.Items;
 
 namespace TynyransMod
 {
   public class TynyransMod : Mod
   {
     public static ModHotKey UseBlood;
+    public static int TynCoinID;
     internal BloodLevel bloodLevel;
     private UserInterface bloodLevelUI;
 
@@ -22,12 +25,14 @@ namespace TynyransMod
       bloodLevelUI.SetState(bloodLevel);
 
       UseBlood = RegisterHotKey("Use Blood Magic", "G");
+      TynCoinID = CustomCurrencyManager.RegisterCurrency(new TynCoin(ModContent.ItemType<Items.TynCoin>(), 999L));
     }
     public override void Unload()
     {
       bloodLevel = null;
       bloodLevelUI = null;
       UseBlood = null;
+      TynCoinID = default;
     }
 
     private bool DrawBloodLevelUI()
