@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
+using static TynyransMod.TynUtils;
 using Terraria.UI;
 using TynyransMod.UI;
 using TynyransMod.Items;
@@ -54,6 +56,16 @@ namespace TynyransMod
     {
       base.UpdateUI(gameTime);
       bloodLevelUI?.Update(gameTime);
+    }
+    public override void UpdateMusic(ref int music, ref MusicPriority priority)
+    {
+      int saku = GetSoundSlot(SoundType.Music, "Sounds/Music/SakuzyoSlam"),
+          tng = GetSoundSlot(SoundType.Music, "Sounds/Music/TouchNGo");
+      if (IsThereABoss().Item1 && music != saku && music != tng)
+      {
+        music = Main.rand.NextBool() ? saku : tng;
+        priority = MusicPriority.BossMedium;
+      }
     }
   }
 }

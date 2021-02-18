@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using TynyransMod.Buffs;
 using Terraria.Localization;
+using System;
 
 namespace TynyransMod
 {
@@ -94,6 +95,18 @@ namespace TynyransMod
         NetworkText text = NetworkText.FromKey(message);
         NetMessage.BroadcastChatMessage(text, new Color(241, 127, 82));
       }
+    }
+    public static Tuple<bool, int> IsThereABoss()
+    {
+      bool bossExists = false;
+      int bossID = -1;
+      foreach (NPC npc in Main.npc)
+      {
+        if (npc.active && npc.boss)
+          bossExists = true;
+        bossID = npc.type;
+      }
+      return Tuple.Create(bossExists, bossID);
     }
     public static int ArmorCalculation(NPC npc, ref int damage, ref bool crit)
     {
