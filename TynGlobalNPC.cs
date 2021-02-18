@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 using TynyransMod.Items;
 using static TynyransMod.TynUtils;
 
@@ -13,7 +14,8 @@ namespace TynyransMod
     public int armorMax = 1000;
     public int armor = 1000;
     public float armorEfficiency = 0.5f;
-    public bool Armored {
+    public bool Armored
+    {
       get => armor > 0;
     }
     public static bool dungeonDrops;
@@ -23,7 +25,7 @@ namespace TynyransMod
     {
       if (!npc.friendly && !npc.townNPC)
       {
-        npc.Tyn().armorMax = npc.lifeMax;
+        npc.Tyn().armorMax = npc.boss ? npc.lifeMax / 10 : npc.lifeMax;
         npc.Tyn().armor = npc.Tyn().armorMax;
       }
     }
@@ -44,21 +46,15 @@ namespace TynyransMod
       damage = ArmorCalculation(target, ref damage, ref crit);
     }
     // TODO: Figure this shit out
-    // public override void NPCLoot(NPC npc)
-    // {
-    //   for (int i = 0; i < Main.player.Length; i++)
-    //   {
-    //     Player currPC = Main.player[i];
-    //     if (currPC.ZoneDungeon)
-    //     {
-    //       // if (Main.rand.Next(1, 100) >= 95) // 5%
-    //       // {
-    //         int sWBID = ModContent.ItemType<ScrollWaterBolt>();
-    //         Item sWB = Main.item[sWBID];
-    //         Item.NewItem((int)npc.position.X, (int)npc.position.Y, sWB.width, sWB.height, sWBID);
-    //       // }
-    //     }
-    //   }
-    // }
+    public override void NPCLoot(NPC npc)
+    {
+      if (npc.active && !npc.friendly)
+      {
+        if (Main.player[Player.FindClosest(npc.position, npc.width, npc.height)].ZoneDungeon && 10.PercentChance())
+          Item.NewItem(npc.getRect(), ItemType<ScrollWaterBolt>());
+        if (/*!Main.hardMode && */5.PercentChance())
+          Item.NewItem(npc.getRect(), ItemType<ScrollSparking>());
+      }
+    }
   }
 }

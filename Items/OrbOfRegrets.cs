@@ -25,7 +25,16 @@ namespace TynyransMod.Items
     }
 
     public override bool ConsumeItem(Player player) => false;
-    public override bool CanUseItem(Player player) => Main.expertMode && !Main.hardMode;
+    public override bool CanUseItem(Player player)
+    {
+      if (Main.expertMode && !TynyranWorld.DownedAnyBoss) { return true; }
+      else
+      {
+        if (!Main.expertMode) Talk("You must be in a more unforgiving world. (Expert world only)");
+        if (TynyranWorld.DownedAnyBoss) Talk("You must choose this fate before your journey begins. (No bosses killed yet)");
+        return false;
+      }
+    }
     public override bool UseItem(Player player)
     {
       Main.PlaySound(SoundID.DD2_BetsyDeath);

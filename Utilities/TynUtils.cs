@@ -27,6 +27,8 @@ namespace TynyransMod
       v.Y = semiAxisY;
       return v;
     }
+    public static bool PercentChance(this int chance) => Main.rand.Next(100) <= chance;
+    public static bool PercentChance(this float chance) => Main.rand.NextFloat(100f) <= chance;
     public static Vector2 RotateTo(this Vector2 v, float rotation)
     {
       float oldVRotation = v.ToRotation();

@@ -19,11 +19,7 @@ namespace TynyransMod.Projectiles
       projectile.CloneDefaults(ProjectileID.Spark);
       projectile.penetrate = -1;
       projectile.hide = false;
-    }
-
-    public override void AI()
-    {
-      Main.projectile[ProjectileID.Spark].AI();
+      aiType = ProjectileID.Spark;
     }
     public override void OnHitNPC(NPC target, int damage, float knockBack, bool crit)
     {
@@ -31,6 +27,14 @@ namespace TynyransMod.Projectiles
       {
         Vector2 perturbedSpeed = new Vector2(0, 10f).RotatedBy(rotation.InRadians());
         Projectile.NewProjectile(target.position, perturbedSpeed, ProjectileID.Spark, damage, knockBack, projectile.owner);
+      }
+    }
+    public override void Kill(int timeLeft)
+    {
+      for (float rotation = 0f; rotation <= 360f; rotation += 45f)
+      {
+        Vector2 perturbedSpeed = new Vector2(0, 10f).RotatedBy(rotation.InRadians());
+        Projectile.NewProjectile(projectile.position, perturbedSpeed, ProjectileID.Spark, projectile.damage, projectile.knockBack, projectile.owner);
       }
     }
   }
