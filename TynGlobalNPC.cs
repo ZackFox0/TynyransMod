@@ -52,7 +52,7 @@ namespace TynyransMod
       {
         if (Main.player[Player.FindClosest(npc.position, npc.width, npc.height)].ZoneDungeon && 10.PercentChance())
           Item.NewItem(npc.getRect(), ItemType<ScrollWaterBolt>());
-        if (/*!Main.hardMode && */5.PercentChance())
+        if (!Main.hardMode && 5.PercentChance())
           Item.NewItem(npc.getRect(), ItemType<ScrollSparking>());
       }
     }
