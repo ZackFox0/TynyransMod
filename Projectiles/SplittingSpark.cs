@@ -31,6 +31,7 @@ namespace TynyransMod.Projectiles
     }
     public override void Kill(int timeLeft)
     {
+      Main.PlaySound(SoundID.DD2_BetsyFireballShot, projectile.position);
       for (float rotation = 0f; rotation <= 360f; rotation += 45f)
       {
         Vector2 perturbedSpeed = new Vector2(0, 10f).RotatedBy(rotation.InRadians());
