@@ -18,8 +18,8 @@ namespace TynyransMod.Items
     {
       item.CloneDefaults(ItemID.WandofSparking);
       base.SetDefaults();
-      item.damage = (int)(item.damage * 1.25);
-      item.shoot = ProjectileType<SplittingSpark>();
+      item.damage *= 3;
+      item.shoot = ProjectileType<SplitSplittingSpark>();
       item.autoReuse = true;
       item.useTime = 15;
       item.useAnimation = 20;

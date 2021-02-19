@@ -59,11 +59,10 @@ namespace TynyransMod
     }
     public override void UpdateMusic(ref int music, ref MusicPriority priority)
     {
-      int saku = GetSoundSlot(SoundType.Music, "Sounds/Music/SakuzyoSlam"),
-          tng = GetSoundSlot(SoundType.Music, "Sounds/Music/TouchNGo");
-      if (IsThereABoss().Item1 && music != saku && music != tng)
+      int tng = GetSoundSlot(SoundType.Music, "Sounds/Music/TouchNGo");
+      if (IsThereABoss().Item1)
       {
-        music = Main.rand.NextBool() ? saku : tng;
+        music = tng;
         priority = MusicPriority.BossMedium;
       }
     }
