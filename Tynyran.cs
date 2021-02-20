@@ -83,7 +83,7 @@ namespace TynyransMod
         startingR = startingR + 3 >= 360f ? 0 : startingR + 3;
         foreach (Projectile proj in Main.projectile)
         {
-          if (proj.active && proj.hostile && proj.position.IsInRadius(player.position, 200f))
+          if (proj.active && proj.hostile && proj.IsInRadius(player.position, 200f))
           {
             for (int i = 0; i < 10; i++)
               _ = Dust.NewDust(proj.position, 3, 3, 16, -proj.velocity.X, -proj.velocity.Y, 90, new Color(255, 255, 255), 1f);

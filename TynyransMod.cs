@@ -18,6 +18,7 @@ namespace TynyransMod
     public static int TynCoinID;
     internal BloodLevel bloodLevel;
     private UserInterface bloodLevelUI;
+    public static int tng, alc;
 
     public override void Load()
     {
@@ -28,13 +29,16 @@ namespace TynyransMod
 
       UseBlood = RegisterHotKey("Use Blood Magic", "G");
       TynCoinID = CustomCurrencyManager.RegisterCurrency(new TynCoin(ModContent.ItemType<Items.TynCoin>(), 999L));
+
+      tng = GetSoundSlot(SoundType.Music, "Sounds/Music/TouchNGo");
+      alc = GetSoundSlot(SoundType.Music, "Sounds/Music/Alchemy");
     }
     public override void Unload()
     {
       bloodLevel = null;
       bloodLevelUI = null;
       UseBlood = null;
-      TynCoinID = default;
+      TynCoinID = tng = alc = default;
     }
 
     private bool DrawBloodLevelUI()
@@ -59,10 +63,14 @@ namespace TynyransMod
     }
     public override void UpdateMusic(ref int music, ref MusicPriority priority)
     {
-      int tng = GetSoundSlot(SoundType.Music, "Sounds/Music/TouchNGo");
-      if (IsThereABoss().Item1)
+      var boss = IsThereABoss();
+      if (boss.Item1)
       {
-        music = tng;
+        if (NPC.AnyNPCs(NPCID.Plantera))
+          music = alc;
+        else
+          music = tng;
+
         priority = MusicPriority.BossMedium;
       }
     }

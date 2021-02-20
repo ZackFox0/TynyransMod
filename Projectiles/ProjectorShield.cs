@@ -49,7 +49,7 @@ namespace TynyransMod.Projectiles
 
       foreach (Projectile proj in Main.projectile)
       {
-        if (proj.active && proj.hostile && proj.position.IsInRadius(projectile.position, radius))
+        if (proj.active && proj.hostile && proj.IsInRadius(projectile.position, radius))
         {
           for (int i = 0; i < 10; i++)
             _ = Dust.NewDust(proj.position, 3, 3, 16, -proj.velocity.X, -proj.velocity.Y, 90, new Color(255,255,255), 1f);

@@ -29,6 +29,7 @@ namespace TynyransMod.Projectiles
         Vector2 perturbedSpeed = new Vector2(0, 10f).RotatedBy(rotation.InRadians());
         Projectile.NewProjectile(target.position, perturbedSpeed, ProjectileType<SplittingSpark>(), damage, knockBack, projectile.owner);
       }
+      target.immune[projectile.owner] = 1;
     }
     public override void Kill(int timeLeft)
     {
