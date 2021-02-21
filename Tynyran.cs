@@ -33,7 +33,7 @@ namespace TynyransMod
       bloodConsumedOnUse = 25;
       deflectable = false;
       hemoCrit = 0;
-      hemoDamage = 1f;
+      hemoDamage = 2f;
       hemomancy = false;
       maxBloodLevel = 100;
       micitBangle = false;
