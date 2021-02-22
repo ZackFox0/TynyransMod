@@ -16,13 +16,13 @@ namespace TynyransMod
   {
     public static ModHotKey UseBlood;
     public static int TynCoinID;
-    internal BloodLevel bloodLevel;
+    internal BloodUI bloodLevel;
     private UserInterface bloodLevelUI;
     public static int tng, alc;
 
     public override void Load()
     {
-      bloodLevel = new BloodLevel();
+      bloodLevel = new BloodUI();
       bloodLevel.Initialize();
       bloodLevelUI = new UserInterface();
       bloodLevelUI.SetState(bloodLevel);
@@ -43,7 +43,7 @@ namespace TynyransMod
 
     private bool DrawBloodLevelUI()
     {
-      if (BloodLevel.visible) bloodLevelUI.Draw(Main.spriteBatch, new GameTime());
+      if (BloodUI.visible) bloodLevelUI.Draw(Main.spriteBatch, new GameTime());
       return true;
     }
 
