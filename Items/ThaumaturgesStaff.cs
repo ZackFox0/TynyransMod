@@ -23,8 +23,8 @@ namespace TynyransMod.Items
       item.width = 46;
       item.height = 24;
       item.rare = ItemRarityID.Lime;
-      item.useTime = 40;
-      item.useAnimation = 40;
+      item.useTime = 35;
+      item.useAnimation = 35;
       item.useTurn = false;
       item.useStyle = ItemUseStyleID.HoldingOut;
       item.magic = true;
@@ -128,5 +128,6 @@ namespace TynyransMod.Items
       }
       return true;
     }
+
   }
 }

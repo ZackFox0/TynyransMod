@@ -7,6 +7,7 @@ using Terraria.GameInput;
 using TynyransMod.Items;
 using static Terraria.ModLoader.ModContent;
 using TynyransMod.Buffs;
+using Terraria.ID;
 
 namespace TynyransMod
 {
@@ -30,6 +31,7 @@ namespace TynyransMod
 
     private float startingR;
     private float stalwartBurnout;
+    private float startingRThaum;
 
     public override void ResetEffects()
     {
@@ -60,6 +62,32 @@ namespace TynyransMod
         d.noGravity = true;
       }
     }
+    private void ThaumaturgeEffects()
+    {
+      if (AForUI != 0)
+      {
+        if (AForUIcharges > 0)
+        {
+          for (float rotation = startingRThaum; rotation < 360f + startingRThaum; rotation += 360f / AForUIcharges)
+          {
+            Vector2 spawnPosition = player.MountedCenter + new Vector2(0f, 50f).RotatedBy(rotation.InRadians());
+            Dust d = Dust.NewDustPerfect(spawnPosition, DustID.Fire, new Vector2(0f, 0f), 90, new Color(255, 255, 255), 2f);
+            d.noLight = true;
+            d.noGravity = true;
+          }
+        }
+        else if (AForUIcharges < 0)
+        {
+          for (float rotation = startingRThaum; rotation < 360f + startingRThaum; rotation += 360f / -AForUIcharges)
+          {
+            Vector2 spawnPosition = player.MountedCenter + new Vector2(0f, 50f).RotatedBy(rotation.InRadians());
+            Dust d = Dust.NewDustPerfect(spawnPosition, DustID.Ice, new Vector2(0f, 0f), 90, new Color(255, 255, 255), 1f);
+            d.noLight = true;
+            d.noGravity = true;
+          }
+        }
+      }
+    }
     public override void SetupStartInventory(IList<Item> items, bool mediumCoreDeath)
     {
       items.Add(CreateItem(ItemType<OrbOfRegrets>()));
@@ -81,8 +109,15 @@ namespace TynyransMod
     }
     public override void PostUpdate()
     {
+      if (AForUI != 0)
+      {
+        startingRThaum = startingRThaum + 3 >= 360f ? 0 : startingRThaum + 3;
+        ThaumaturgeEffects();
+      }
+      else { startingRThaum = 0; }
       // Perpetual delay when under AF
-      if (AForUI == 1) {
+      if (AForUI == 1)
+      {
         player.manaRegenDelay = 5;
         if (player.statMana == 0)
         {
@@ -101,7 +136,8 @@ namespace TynyransMod
         }
       }
       // Increased mana regen and no delay under UI
-      if (AForUI == -1) {
+      if (AForUI == -1)
+      {
         player.manaRegenCount += (int)(player.manaRegenCount * 0.50 * -AForUIcharges);
         player.manaRegenDelay = 0;
       }
