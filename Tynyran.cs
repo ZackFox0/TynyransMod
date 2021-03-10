@@ -23,12 +23,17 @@ namespace TynyransMod
     public int bloodLevel, maxBloodLevel = 100, bloodGained, bloodCollectionCooldown, bloodConsumedOnUse = 25;
     public int noteCount, maxNotes = 4;
     public readonly int maxGainPerSecond = 10;
+    // Positive means AF, negative means UI
+    public sbyte AForUI;
+    public sbyte AForUIcharges;
 
     private float startingR;
     private float stalwartBurnout;
 
     public override void ResetEffects()
     {
+      AForUI = 0;
+      AForUIcharges = 0;
       bloodLevel = hemomancy ? bloodLevel : 0;
       bloodConsumedOnUse = 25;
       deflectable = false;
@@ -75,6 +80,13 @@ namespace TynyransMod
     }
     public override void PostUpdate()
     {
+      // Perpetual delay when under AF
+      if (AForUI == 1) player.manaRegenDelay = 5;
+      // Increased mana regen and no delay under UI
+      if (AForUI == -1) {
+        player.manaRegenCount += (int)(player.manaRegenCount * 0.25 * -AForUIcharges);
+        player.manaRegenDelay = 0;
+      } 
       if (bloodCollectionCooldown > 0) bloodCollectionCooldown--;
       if (bloodCollectionCooldown is 0) bloodGained = 0;
       if (stalwartDome)
@@ -130,10 +142,29 @@ namespace TynyransMod
         regen = -10 - stalwartBurnout;
       }
     }
+    public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat)
+    {
+      if (item.type == ItemType<ThaumaturgesStaff>())
+      {
+        if (AForUIcharges > 0)
+          mult += 0.3f * AForUIcharges;
+        else if (AForUIcharges < 0)
+          mult += 0.1f * AForUIcharges;
+      }
+    }
     public override void ModifyManaCost(Item item, ref float reduce, ref float mult)
     {
-      if (micitEarrings1 && micitEarrings2)
-        reduce -= 0.35f;
+      if (AForUIcharges > 0) mult += 0.15f * AForUIcharges;
+      else if (AForUIcharges < 0) reduce += 0.1f * AForUIcharges;
+      if (micitEarrings1 && micitEarrings2) reduce -= 0.35f;
+    }
+    public override void OnMissingMana(Item item, int neededMana)
+    {
+      // If using thaum staff and have at least a little bit of mana, give you the last one
+      if (item.type == ItemType<ThaumaturgesStaff>() && player.statMana != 0)
+      {
+        player.statMana = neededMana;
+      }
     }
     public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
     {
