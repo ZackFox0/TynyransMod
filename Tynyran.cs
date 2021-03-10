@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Terraria.GameInput;
 using TynyransMod.Items;
 using static Terraria.ModLoader.ModContent;
+using TynyransMod.Buffs;
 
 namespace TynyransMod
 {
@@ -81,12 +82,29 @@ namespace TynyransMod
     public override void PostUpdate()
     {
       // Perpetual delay when under AF
-      if (AForUI == 1) player.manaRegenDelay = 5;
+      if (AForUI == 1) {
+        player.manaRegenDelay = 5;
+        if (player.statMana == 0)
+        {
+          switch (AForUIcharges)
+          {
+            case 1:
+              player.ClearBuff(BuffType<AstralFireI>());
+              break;
+            case 2:
+              player.ClearBuff(BuffType<AstralFireII>());
+              break;
+            case 3:
+              player.ClearBuff(BuffType<AstralFireIII>());
+              break;
+          }
+        }
+      }
       // Increased mana regen and no delay under UI
       if (AForUI == -1) {
-        player.manaRegenCount += (int)(player.manaRegenCount * 0.25 * -AForUIcharges);
+        player.manaRegenCount += (int)(player.manaRegenCount * 0.50 * -AForUIcharges);
         player.manaRegenDelay = 0;
-      } 
+      }
       if (bloodCollectionCooldown > 0) bloodCollectionCooldown--;
       if (bloodCollectionCooldown is 0) bloodGained = 0;
       if (stalwartDome)
@@ -154,8 +172,8 @@ namespace TynyransMod
     }
     public override void ModifyManaCost(Item item, ref float reduce, ref float mult)
     {
-      if (AForUIcharges > 0) mult += 0.15f * AForUIcharges;
-      else if (AForUIcharges < 0) reduce += 0.1f * AForUIcharges;
+      if (AForUIcharges > 0) mult += 0.3f * AForUIcharges;
+      else if (AForUIcharges < 0) reduce += 0.15f * AForUIcharges;
       if (micitEarrings1 && micitEarrings2) reduce -= 0.35f;
     }
     public override void OnMissingMana(Item item, int neededMana)
@@ -173,6 +191,10 @@ namespace TynyransMod
     public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
     {
       if (TynyranWorld.tynMode) damage = (int)(damage * 1.5f);
+    }
+    public override void PostUpdateRunSpeeds()
+    {
+      if (player.velocity.X != 0 && player.Tyn().AForUI == -1) player.manaRegenCount *= 2;
     }
   }
 }

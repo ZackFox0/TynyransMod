@@ -10,7 +10,6 @@ namespace TynyransMod.Items
 {
   public class ThaumaturgesStaff : ModItem
   {
-    public override string Texture => $"Terraria/Item_{ItemID.DiamondStaff}";
     public override void SetStaticDefaults()
     {
       DisplayName.SetDefault("Thaumaturge's Staff");

@@ -7,7 +7,7 @@ namespace TynyransMod.Buffs
 	{
 		public override void SetDefaults() {
 			DisplayName.SetDefault("Astral Fire I");
-			Description.SetDefault("20% increased damage and mana cost");
+			Description.SetDefault("30% increased damage and mana cost");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;
@@ -23,7 +23,7 @@ namespace TynyransMod.Buffs
 	{
 		public override void SetDefaults() {
 			DisplayName.SetDefault("Astral Fire II");
-			Description.SetDefault("40% increased damage and mana cost");
+			Description.SetDefault("60% increased damage and mana cost");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;
@@ -39,7 +39,7 @@ namespace TynyransMod.Buffs
 	{
 		public override void SetDefaults() {
 			DisplayName.SetDefault("Astral Fire III");
-			Description.SetDefault("60% increased damage and mana cost");
+			Description.SetDefault("90% increased damage and mana cost");
 			Main.debuff[Type] = true;
 			Main.pvpBuff[Type] = true;
 			Main.buffNoSave[Type] = true;

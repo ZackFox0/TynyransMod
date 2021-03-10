@@ -8,7 +8,7 @@ namespace TynyransMod.Buffs
     public override void SetDefaults()
     {
       DisplayName.SetDefault("Umbral Ice I");
-      Description.SetDefault("25% increased mana regen and no regen delay");
+      Description.SetDefault("50% increased mana regen and no regen delay\n-10% damage");
       Main.debuff[Type] = true;
       Main.pvpBuff[Type] = true;
       Main.buffNoSave[Type] = true;
@@ -25,7 +25,7 @@ namespace TynyransMod.Buffs
     public override void SetDefaults()
     {
       DisplayName.SetDefault("Umbral Ice II");
-      Description.SetDefault("50% increased mana regen and no regen delay");
+      Description.SetDefault("100% increased mana regen and no regen delay\n-20% damage");
       Main.debuff[Type] = true;
       Main.pvpBuff[Type] = true;
       Main.buffNoSave[Type] = true;
@@ -42,7 +42,7 @@ namespace TynyransMod.Buffs
     public override void SetDefaults()
     {
       DisplayName.SetDefault("Umbral Ice III");
-      Description.SetDefault("75% increased mana regen and no regen delay");
+      Description.SetDefault("150% increased mana regen and no regen delay\n-30% damage");
       Main.debuff[Type] = true;
       Main.pvpBuff[Type] = true;
       Main.buffNoSave[Type] = true;
