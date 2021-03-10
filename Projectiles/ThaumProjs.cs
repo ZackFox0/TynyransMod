@@ -16,8 +16,8 @@ namespace TynyransMod.Projectiles
     public override void SetDefaults()
     {
       projectile.friendly = true;
-      projectile.width = 24;
-      projectile.height = 24;
+      projectile.width = 12;
+      projectile.height = 12;
       projectile.tileCollide = true;
       projectile.ignoreWater = true;
       projectile.timeLeft = 180;
@@ -82,8 +82,8 @@ namespace TynyransMod.Projectiles
     public override void SetDefaults()
     {
       projectile.friendly = true;
-      projectile.width = 24;
-      projectile.height = 24;
+      projectile.width = 12;
+      projectile.height = 12;
       projectile.tileCollide = true;
       projectile.ignoreWater = true;
       projectile.timeLeft = 180;
@@ -96,6 +96,10 @@ namespace TynyransMod.Projectiles
       _ = Dust.NewDust(projectile.position, 6, 6, DustID.Ice, default, default, 90);
       _ = Dust.NewDust(projectile.position, 6, 6, DustID.Ice, default, default, 90);
       _ = Dust.NewDust(projectile.position, 6, 6, DustID.Ice, default, default, 90);
+    }
+    public override void Kill(int timeLeft)
+    {
+      Main.PlaySound(SoundID.Item27, projectile.position);
     }
   }
 }
