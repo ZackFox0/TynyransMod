@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using static TynyransMod.TynUtils;
 
 namespace TynyransMod.Projectiles
 {
@@ -32,6 +33,7 @@ namespace TynyransMod.Projectiles
     }
     public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
     {
+      target.AddBuff(BuffID.OnFire, 5.InTicks());
       for (float rotation = 0f; rotation < 360f; rotation += 8f)
       {
         Dust d = Dust.NewDustPerfect(projectile.position, DustID.Fire, new Vector2(0f, 10f).RotatedBy(rotation.InRadians()), 90, new Color(255, 255, 255), 1f);
@@ -43,6 +45,7 @@ namespace TynyransMod.Projectiles
         {
           float angle = projectile.AngleTo(npc.position);
           npc.StrikeNPC(damage, knockback, angle >= 180f.InRadians() ? -1 : 1, crit);
+          npc.AddBuff(BuffID.OnFire, 5.InTicks());
         }
       }
     }
@@ -59,9 +62,14 @@ namespace TynyransMod.Projectiles
         {
           float angle = projectile.AngleTo(npc.position);
           npc.StrikeNPC(projectile.damage, projectile.knockBack, angle >= 180f.InRadians() ? -1 : 1);
+          npc.AddBuff(BuffID.OnFire, 5.InTicks());
         }
       }
       return true;
+    }
+    public override void Kill(int timeLeft)
+    {
+      Main.PlaySound(SoundID.DD2_BetsyFireballImpact, projectile.position);
     }
   }
   public class ThaumaturgeIce : ModProjectile

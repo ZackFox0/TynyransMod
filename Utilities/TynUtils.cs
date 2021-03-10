@@ -18,6 +18,8 @@ namespace TynyransMod
 
     public static float InRadians(this float degrees) => MathHelper.ToRadians(degrees);
     public static float InDegrees(this float radians) => MathHelper.ToDegrees(radians);
+    public static int InTicks(this int seconds) => seconds * 60;
+    public static int InTicks(this float seconds) => (int)Math.Round(seconds * 60);
 
     public static Vector2 RandomPointInHitbox(this Rectangle hitbox)
     {

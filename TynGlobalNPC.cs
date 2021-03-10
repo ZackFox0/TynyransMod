@@ -11,8 +11,7 @@ namespace TynyransMod
 {
   public class TynGlobalNPC : GlobalNPC
   {
-    public int armorMax = 1000;
-    public int armor = 1000;
+    public int armorMax, armor;
     public float armorEfficiency = 0.5f;
     public bool Armored
     {
@@ -25,8 +24,7 @@ namespace TynyransMod
     {
       if (!npc.friendly && !npc.townNPC)
       {
-        npc.Tyn().armorMax = npc.boss ? npc.lifeMax / 10 : npc.lifeMax;
-        npc.Tyn().armor = npc.Tyn().armorMax;
+        npc.Tyn().armorMax = npc.boss ? npc.lifeMax / 10 : npc.lifeMax / 5;
       }
     }
     public override void ResetEffects(NPC npc)
