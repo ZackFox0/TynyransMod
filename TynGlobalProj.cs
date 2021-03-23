@@ -8,7 +8,6 @@ namespace TynyransMod
   {
     public bool bloodAmpBoosted;
     public bool deflected;
-    public bool note;
     public override bool InstancePerEntity => true;
     public override bool CloneNewInstances => true;
   }

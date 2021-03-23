@@ -23,7 +23,18 @@ namespace TynyransMod
     public float tynyran, hemoDamage;
     public int tynyranCrit, hemoCrit;
     public int bloodLevel, maxBloodLevel = 100, bloodGained, bloodCollectionCooldown, bloodConsumedOnUse = 25;
-    public int noteCount, maxNotes = 4;
+    public byte NoteCount {
+      get {
+        byte v = 0;
+        foreach (byte b in noteList)
+        {
+          if (b != 0) v++;
+        }
+        return v;
+      }
+    }
+    public byte maxNotes = 4;
+    public byte[] noteList = new byte[4] {0, 0, 0, 0};
     public readonly int maxGainPerSecond = 10;
     // Positive means AF, negative means UI
     public sbyte AForUI;
@@ -51,6 +62,17 @@ namespace TynyransMod
       tynyranCrit = 0;
       stalwartDome = false;
       stalwartBurnout = stalwartBurnout - 1f <= 0f ? 0f : stalwartBurnout - 1f;
+    }
+    public void GenerateRandomNextNote()
+    {
+      for (byte b = 0; b < noteList.Length; b++)
+      {
+        if (noteList[b] == 0)
+        {
+          noteList[b] = (byte)Main.rand.Next(1, 4);
+          break;
+        }
+      }
     }
     private void CreateShieldField()
     {

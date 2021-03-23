@@ -17,7 +17,8 @@ namespace TynyransMod
     public static ModHotKey UseBlood;
     public static int TynCoinID;
     internal BloodUI bloodLevel;
-    private UserInterface bloodLevelUI;
+    internal NoteUI NoteUI;
+    private UserInterface bloodLevelUI, notesUI;
     public static int tng, alc;
 
     public override void Load()
@@ -26,6 +27,11 @@ namespace TynyransMod
       bloodLevel.Initialize();
       bloodLevelUI = new UserInterface();
       bloodLevelUI.SetState(bloodLevel);
+
+      NoteUI = new NoteUI();
+      NoteUI.Initialize();
+      notesUI = new UserInterface();
+      notesUI.SetState(NoteUI);
 
       UseBlood = RegisterHotKey("Use Blood Magic", "G");
       TynCoinID = CustomCurrencyManager.RegisterCurrency(new TynCoin(ModContent.ItemType<Items.TynCoin>(), 999L));
@@ -36,11 +42,17 @@ namespace TynyransMod
     public override void Unload()
     {
       bloodLevel = null;
-      bloodLevelUI = null;
+      NoteUI = null;
+      bloodLevelUI = notesUI = null;
+
       UseBlood = null;
       TynCoinID = tng = alc = default;
     }
-
+    private bool DrawNotesUI()
+    {
+      if (NoteUI.visible) notesUI.Draw(Main.spriteBatch, new GameTime());
+      return true;
+    }
     private bool DrawBloodLevelUI()
     {
       if (BloodUI.visible) bloodLevelUI.Draw(Main.spriteBatch, new GameTime());
@@ -53,6 +65,7 @@ namespace TynyransMod
       if (accbarIndex != -1)
       {
         layers.Insert(accbarIndex, new LegacyGameInterfaceLayer("TynyransMod: Blood Level", DrawBloodLevelUI, InterfaceScaleType.UI));
+        layers.Insert(accbarIndex, new LegacyGameInterfaceLayer("TynyransMod: Notes", DrawNotesUI, InterfaceScaleType.UI));
       }
     }
 
@@ -60,6 +73,7 @@ namespace TynyransMod
     {
       base.UpdateUI(gameTime);
       bloodLevelUI?.Update(gameTime);
+      notesUI?.Update(gameTime);
     }
     public override void UpdateMusic(ref int music, ref MusicPriority priority)
     {
