@@ -14,7 +14,7 @@ namespace TynyransMod.UI
 {
   public class NoteUI : UIState
   {
-    public static bool visible;
+    public static bool visible = true;
     private float oldScale = Main.inventoryScale;
     private UIElement area;
     private UIImageFramed note1, note2, note3, note4;
@@ -61,7 +61,7 @@ namespace TynyransMod.UI
       if (!Main.dedServ)
       {
         Tynyran p = Main.LocalPlayer.Tyn();
-        visible = Main.LocalPlayer.HeldItem == Main.item[ItemType<HuntingHorn>()];
+        visible = Main.LocalPlayer.HeldItem.type == ItemType<HuntingHorn>();
         note1.SetFrame(new Rectangle(0, 24 * p.noteList[0], 32, 24));
         note2.SetFrame(new Rectangle(0, 24 * p.noteList[1], 32, 24));
         note3.SetFrame(new Rectangle(0, 24 * p.noteList[2], 32, 24));

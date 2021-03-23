@@ -46,9 +46,10 @@ namespace TynyransMod.Items
       List<int> uniqueNotes = new List<int>();
       if (player.altFunctionUse == 2)
       {
+        madeNoteAlready = true;
         foreach (byte b in player.Tyn().noteList)
         {
-          if (!uniqueNotes.Contains(b)) uniqueNotes.Add(b);
+          if (b > 0 && !uniqueNotes.Contains(b)) uniqueNotes.Add(b);
         }
         switch (uniqueNotes.Count)
         {
@@ -66,9 +67,9 @@ namespace TynyransMod.Items
       }
       return true;
     }
-    public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit)
+    public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit)
     {
-      if (!madeNoteAlready)
+      if (!madeNoteAlready && player.altFunctionUse != 2)
       {
         player.Tyn().GenerateRandomNextNote();
         madeNoteAlready = true;
@@ -76,7 +77,7 @@ namespace TynyransMod.Items
     }
     public override void UpdateInventory(Player player)
     {
-      if (player.itemAnimation == 0 && madeNoteAlready) madeNoteAlready = false;
+      if (player.itemAnimation <= 1 && madeNoteAlready) madeNoteAlready = false;
     }
 	}
 }
