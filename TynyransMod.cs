@@ -18,7 +18,8 @@ namespace TynyransMod
     public static int TynCoinID;
     internal BloodUI bloodLevel;
     internal NoteUI NoteUI;
-    private UserInterface bloodLevelUI, notesUI;
+    internal AetherUI AetherUI;
+    private UserInterface bloodLevelUI, notesUI, aetherUI;
     public static int tng, alc;
 
     public override void Load()
@@ -33,6 +34,11 @@ namespace TynyransMod
       notesUI = new UserInterface();
       notesUI.SetState(NoteUI);
 
+      AetherUI = new AetherUI();
+      AetherUI.Initialize();
+      aetherUI = new UserInterface();
+      aetherUI.SetState(AetherUI);
+
       UseBlood = RegisterHotKey("Use Blood Magic", "G");
       TynCoinID = CustomCurrencyManager.RegisterCurrency(new TynCoin(ModContent.ItemType<Items.TynCoin>(), 999L));
 
@@ -43,7 +49,8 @@ namespace TynyransMod
     {
       bloodLevel = null;
       NoteUI = null;
-      bloodLevelUI = notesUI = null;
+      AetherUI = null;
+      bloodLevelUI = notesUI = aetherUI = null;
 
       UseBlood = null;
       TynCoinID = tng = alc = default;
@@ -58,6 +65,11 @@ namespace TynyransMod
       if (BloodUI.visible) bloodLevelUI.Draw(Main.spriteBatch, new GameTime());
       return true;
     }
+    private bool DrawAetherUI()
+    {
+      if (AetherUI.visible) aetherUI.Draw(Main.spriteBatch, new GameTime());
+      return true;
+    }
 
     public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
     {
@@ -66,6 +78,7 @@ namespace TynyransMod
       {
         layers.Insert(accbarIndex, new LegacyGameInterfaceLayer("TynyransMod: Blood Level", DrawBloodLevelUI, InterfaceScaleType.UI));
         layers.Insert(accbarIndex, new LegacyGameInterfaceLayer("TynyransMod: Notes", DrawNotesUI, InterfaceScaleType.UI));
+        layers.Insert(accbarIndex, new LegacyGameInterfaceLayer("TynyransMod: Aether", DrawAetherUI, InterfaceScaleType.UI));
       }
     }
 
@@ -74,6 +87,7 @@ namespace TynyransMod
       base.UpdateUI(gameTime);
       bloodLevelUI?.Update(gameTime);
       notesUI?.Update(gameTime);
+      aetherUI?.Update(gameTime);
     }
     public override void UpdateMusic(ref int music, ref MusicPriority priority)
     {

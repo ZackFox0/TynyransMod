@@ -19,10 +19,12 @@ namespace TynyransMod
                 micitEarrings2,
                 stalwartDome,
                 hemomancy,
-                bloodAmp;
+                bloodAmp,
+                aether;
     public float tynyran, hemoDamage;
     public int tynyranCrit, hemoCrit;
     public int bloodLevel, maxBloodLevel = 100, bloodGained, bloodCollectionCooldown, bloodConsumedOnUse = 25;
+    public byte aetherCharges, maxAetherCharges = 10;
     public byte NoteCount {
       get {
         byte v = 0;
